@@ -1,0 +1,92 @@
+name: "Tech Explainer"
+version: "1.0"
+description: "Clean, professional 3-scene technical animations"
+
+manim_config:
+  pixel_height: 720
+  pixel_width: 1280  
+  frame_rate: 30
+  background_color: "#1e1e1e"  
+
+colors:
+  primary: TEAL      
+  secondary: ORANGE   
+  success: GREEN       
+  accent: PURPLE      
+  warning: YELLOW     
+  error: RED          
+  text: WHITE          
+  background: "#1e1e1e"
+
+typography:
+  title_size: 32
+  subtitle_size: 28  
+  code_size: 24
+  label_size: 20
+
+scene_template:
+  scene1:
+    focus: "Problem/Current State"
+    duration: "45-60s"
+    layout: "Left: Current → Right: Problem → Center: Title"
+  scene2: 
+    focus: "Solution/Mechanism"
+    duration: "45-60s" 
+    layout: "Top: Input → Middle: Process → Bottom: Output"
+  scene3:
+    focus: "Result/Benefit"
+    duration: "45-60s"
+    layout: "Center: Success indicator → Sides: Before/After"
+
+allowed_primitives:
+  - Text
+  - Circle  
+  - Square
+  - Rectangle
+  - Line
+  - Arrow  
+  - CurvedArrow
+animations:
+  - Write
+  - FadeIn
+  - FadeOut
+  - Create
+  - Transform
+  - Pulse  
+
+transitions:
+  transform: "Transform(old_shape, new_shape)"
+  success: "Pulse(green_circle) + Flash(GREEN)"
+  process: "Create(arrow) between components"
+
+layout_hints:
+  - "title.to_edge(UP)"
+  - "components.shift(UP*0.3 + LEFT/RIGHT*2)"
+  - "labels.next_to(component, DOWN/UP)"
+  - "shapes.shift(DOWN*0.5) if unpositioned"
+
+example_code_snippets:
+  - |
+    title = Text("WebSocket Handshake", font_size=32).to_edge(UP)
+    browser = Rectangle().shift(UP*0.3+LEFT*2).set_fill(TEAL, 0.8)
+    server = Rectangle().shift(UP*0.3+RIGHT*2).set_fill(ORANGE, 0.8)
+    arrow = CurvedArrow(browser.get_right(), server.get_left(), color=TEAL)
+    self.play(Write(title), FadeIn(browser), FadeIn(server), Create(arrow))
+  - |
+    key_box = Rectangle(width=3,height=0.6).set_fill(PURPLE,0.7)
+    key_label = Text("Sec-WebSocket-Key", font_size=24).next_to(key_box, DOWN)
+    self.play(FadeIn(key_box), Write(key_label))
+
+technical_topics:
+  - networking: [CurvedArrow, TEAL→ORANGE flow]
+  - algorithms: [Rectangle→Arrow→Rectangle, GREEN success]
+  - systems: [Browser/Server icons, bidirectional arrows]
+
+kinetic_effects:
+  - "title.animate(ApplyWave())"
+  - "arrow.pulsate()"
+  - "status_circle.ScaleInPlace(1.2).set_color(GREEN)"
+motion_graphics:
+  - Transform(old_connection, new_connection)
+  - GrowFromPoint(arrow_tip)
+
